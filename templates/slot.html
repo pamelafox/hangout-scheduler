@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Hangout Scheduler | Hangout! {% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block middle %}
+
+<h1>{{ topic.title }}</h1>
+
+<p>{{ topic.descrip }}</p>
+
+<div style="margin-bottom: 20px; width: 400px; padding: 10px 0px; border-top: 1px solid #FFA500; border-bottom: 1px solid #FFA500;">
+    {% if slot.counter == 1 %}
+    Is the hangout full?
+    {% else %}
+    Are the hangouts full? 
+    {% endif %}
+    <br><br>
+    <form method="post">
+        <input name="counter" type="hidden" value="{{slot.counter + 1}}">
+        <button type="submit" class="pure-button">Start a new hangout</button>
+    </form>
+</div>
+
+
+<div data-hangouts data-hangouts-prefix="hangout-topic{{topic.id}}-slot{{slot.id}}" data-hangouts-counter={{slot.counter}}>
+</div>
+
+
+{% endblock %}
+
+{% block bodyend %}
+<script src="/js/jquery.min.js"></script>
+<script>
+    window["___gcfg"] = {
+        iframes: {
+            hangout: {
+                url: 'https://talkgadget.google.com/talkgadget/_/widget'
+            }
+        }
+    }
+</script>
+<script src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+
+        function addHangoutWidget(topic, id) {
+            window.gapi.hangout.render(id, {
+                'topic': topic,
+                'publisher_id': '111950594039269281469',
+                'width': 500,
+                'height': 180
+            });
+        }
+
+        var $hangoutsContainer = $('[data-hangouts]');
+        var hangoutsPrefix = $hangoutsContainer.attr('data-hangouts-prefix');
+        var hangoutsCounter = $hangoutsContainer.attr('data-hangouts-counter');
+        for (var num = hangoutsCounter; num > 0; num--) {
+            var hangoutId = hangoutsPrefix + '-' + num;
+            var $hangoutContainer = $('<div></div>');
+            $hangoutContainer.attr('id', hangoutId);
+            $hangoutsContainer.append($hangoutContainer).append('<br><br>');
+            addHangoutWidget('Group ' + num, hangoutId);
+        }
+    });
+
+</script>
+
+{% endblock %}

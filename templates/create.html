@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Hangout Scheduler | Create Topic{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+<link rel="stylesheet" href="/css/jquery.datetime.css">
+
+{% endblock %}
+
+{% block middle %}
+
+<h2>Create Topic</h2>
+
+<form class="pure-form pure-form-aligned" method="post">
+
+    <fieldset>
+
+        <div class="pure-control-group">
+        	<label for="topic-create-title">Title</label>
+            <input name="title" type="text" id="topic-create-title" value="Test title">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="topic-create-descrip">Description (Markdown)</label>
+            <textarea name="descrip" id="topic-create-descrip" rows="6" style="width:422px;">Test descrip</textarea>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="topic-create-start">Start (GMT)</label>
+            <input type="datetime" name="start" id="topic-create-start">
+        </div>
+        
+        <div class="pure-control-group">
+            <label for="topic-create-end">End (GMT)</label>
+            <input type="datetime" name="end" id="topic-create-end">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="topic-create-minutes">Slot duration (minutes)</label>
+            <input type="number" name="slot_minutes" id="topic-create-minutes" value="30" style="width:60px;">
+        </div>
+
+        <div class="pure-controls">
+        	<button type="submit" class="pure-button pure-button-primary">Create</button>
+    	</div>
+
+    </fieldset>
+</form>
+
+
+{% endblock %}
+
+{% block bodyend %}
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.datetime.js"></script>
+{% endblock %}

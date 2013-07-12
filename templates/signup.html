@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Hangout Scheduler | Signup {% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block middle %}
+
+<h1>{{ topic.title }}</h1>
+
+<p data-topic-descrip>{{ topic.descrip }}</p>
+
+<table class="pure-table pure-table-horizontal">
+    <tbody>
+        {% for slot in topic_slots %}
+
+        <tr id="topic-signup-slot-{{slot.id}}">
+
+            <td>
+                {{ slot.id }}
+                <time datetime="{{ slot.start_iso }}" data-display>{{ slot.start_iso }}</time>
+            </td>
+            <td>
+                {% if slot.rsvp_count %}
+                <span>Signed up: {{ slot.rsvp_count }}</span>
+                {% else %}
+                <span>No sign ups yet</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if slot.user_rsvped %}
+                <p style="margin:0; padding-top:10px; display:inline-block; margin-right: 10px;">You're signed up!
+                </p>
+                <form method="post" style="display:inline-block;">
+                    <input name="action" value="unsignup" type="hidden">
+                    <input name="slot_id" value="{{slot.id}}" type="hidden">
+                    <button type="submit" class="pure-button">Remove me</button>
+                </form>
+                
+                {% else %}
+                <form method="post">
+                    <input name="action" value="signup" type="hidden">
+                    <input name="slot_id" value="{{slot.id}}" type="hidden">
+                    <input name="local_time" type="hidden">
+                    <button type="submit" class="pure-button">Sign up</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block bodyend %}
+<script src="/js/jquery.min.js"></script>
+<script src="/js/moment.min.js"></script>
+<script src="/js/marked.js"></script>
+<script src="/js/jquery.eventlinker.js"></script>
+<script>
+$(document).ready(function() {
+
+  $('[data-topic-descrip]').html(marked($('[data-topic-descrip]').text()));
+
+  $('time[data-display]').each(function() {
+    var utcDate = moment.utc($(this).attr('datetime'));
+    var localDate = utcDate.local().format("dddd, MMMM Do YYYY, h:mm:ssa");
+    
+    $(this).text(localDate);
+
+    var $row = $(this).parents('tr');
+    $row.find('input[name=local_time]').val(localDate);
+  });
+
+  $('time[data-event]').eventLinker();
+
+});
+</script>
+{% endblock %}

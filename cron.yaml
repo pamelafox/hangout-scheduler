@@ -1,0 +1,5 @@
+cron:
+- description: hangout reminder
+  url: /email/reminders
+  schedule: every 1 hour
+  timezone: America/Los_Angeles

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Hangout Scheduler | Dashboard {% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block middle %}
+
+
+{% if not topics and not rsvps %}
+<p>You have no upcoming hangout discussions.
+</p>
+{% endif %}
+
+{% if topics %}
+<h3>Your topics:</h3>
+
+<p>These are topics that you've created:</p>
+<ul>
+    {% for topic in topics %}
+    <li><a href="{{ topic.full_link }}">{{ topic.title }}</a></li>
+    {% endfor %}
+</ul>
+<p><a href="/topic/create">+ Create a new topic</a></p>
+<br>
+{% endif %}
+
+{% if rsvps %}
+<h3>Your discussion time slots:</h3>
+
+<p>We will email you a few hours before they begin to remind you.
+    Otherwise, you can come back here when the time comes!</p>
+
+<table class="pure-table pure-table-horizontal">
+    <tbody>
+        {% for rsvp in rsvps %}
+        <tr>
+           <td><a href="{{ rsvp.topic.full_link }}">{{ rsvp.topic.title}}</a></td>
+           <td>
+            <a href="{{ rsvp.slot.full_link }}">{{ rsvp.local_time }}</a>
+           </td>
+           <td>
+            <time datetime="{{ rsvp.slot.start_iso }}" data-event
+                data-event-dates="{{ rsvp.slot.start_iso }}/{{rsvp.slot.end_iso }}"
+                data-event-title="{{ rsvp.topic.title }}"
+                data-event-description="{{ rsvp.topic.descrip }}"
+                data-event-location="{{ rsvp.slot.full_link }}">
+            </td>
+        <tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+
+{% endblock %}
+
+
+
+{% block bodyend %}
+<script src="/js/jquery.min.js"></script>
+<script src="/js/moment.min.js"></script>
+<script src="/js/jquery.eventlinker.js"></script>
+<script>
+$(document).ready(function() {
+
+  $('time[data-event]').eventLinker();
+
+});
+</script>
+{% endblock %}
