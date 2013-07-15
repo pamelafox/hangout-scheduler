@@ -3,3 +3,13 @@ cron:
   url: /email/reminders
   schedule: every 1 hours
   timezone: America/Los_Angeles
+
+- description: hangout setup reminder
+  url: /email/setup-reminders
+  schedule: every 5 minutes
+  timezone: America/Los_Angeles
+
+- description: empty hangout checker
+  url: /email/empty-reminders
+  schedule: every 1 hours
+  timezone: America/Los_Angeles

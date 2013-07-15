@@ -56,17 +56,14 @@
 <script src="/js/moment.min.js"></script>
 <script src="/js/marked.js"></script>
 <script src="/js/jquery.eventlinker.js"></script>
+<script src="/js/util.js"></script>
 <script>
 $(document).ready(function() {
 
-  $('[data-topic-descrip]').html(marked($('[data-topic-descrip]').text()));
+  $('[data-topic-descrip]').each(function() { util.renderToMarkdown($(this)); });
 
   $('time[data-display]').each(function() {
-    var utcDate = moment.utc($(this).attr('datetime'));
-    var localDate = utcDate.local().format("dddd, MMMM Do YYYY, h:mm A");
-    
-    $(this).text(localDate);
-
+    var localDate = util.showLocalTime($(this));
     var $row = $(this).parents('tr');
     $row.find('input[name=local_time]').val(localDate);
   });

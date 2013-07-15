@@ -5,10 +5,11 @@
 
 {% block middle %}
 
-<h1>{{ topic.title }}</h1>
+<h1>{{ topic.title }}, <time datetime="{{ slot.start_iso }}" data-display>{{ slot.start_iso }}</time></h1>
 
-<p>{{ topic.descrip }}</p>
+<p data-topic-descrip>{{ topic.descrip }}</p>
 
+{% if slot.happening_now %}
 <div style="margin-bottom: 20px; width: 400px; padding: 10px 0px; border-top: 1px solid #FFA500; border-bottom: 1px solid #FFA500;">
     {% if slot.counter == 1 %}
     Is the hangout full?
@@ -25,12 +26,17 @@
 
 <div data-hangouts data-hangouts-prefix="hangout-topic{{topic.id}}-slot{{slot.id}}" data-hangouts-counter={{slot.counter}}>
 </div>
-
+{% else %}
+<p>Check back when your hangout starts to join the discussion!</p>
+{% endif %}
 
 {% endblock %}
 
 {% block bodyend %}
 <script src="/js/jquery.min.js"></script>
+<script src="/js/marked.js"></script>
+<script src="/js/moment.min.js"></script>
+<script src="/js/util.js"></script>
 <script>
     window["___gcfg"] = {
         iframes: {
@@ -44,6 +50,10 @@
 <script type="text/javascript">
     
     $(document).ready(function() {
+
+        $('[data-topic-descrip]').each(function() { util.renderToMarkdown($(this)); });
+
+        $('time[data-display]').each(function() { util.showLocalTime($(this)); });
 
         function addHangoutWidget(topic, id) {
             window.gapi.hangout.render(id, {

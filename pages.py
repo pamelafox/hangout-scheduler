@@ -49,6 +49,12 @@ class BasePage(webapp2.RequestHandler):
         self.response.write(template.render(template_values))
 
 
+class HelpSetupPage(BasePage):
+
+    def get_template_filename(self):
+        return 'instructions.html'
+
+
 class DashboardPage(BasePage):
 
     def get(self):
@@ -90,11 +96,11 @@ class TopicSignupPage(BasePage):
         local_time = self.request.get("local_time")
         action = self.request.get("action")
         topic_slot = TopicSlot.get_by_id(slot_id)
-        rsvp = TopicRSVP.all().filter("attendee = ", users.get_current_user()).filter("slot = ", topic_slot).get()
+        rsvp = TopicRSVP.get_for_user_and_slot(users.get_current_user(), topic_slot)
         if not rsvp and action == "signup":
             rsvp = TopicRSVP(slot=topic_slot, attendee=users.get_current_user(), local_time=local_time)
             rsvp.put()
-            self.redirect("/")
+            self.redirect(topic_slot.full_link)
         if rsvp and action == "unsignup":
             rsvp.delete()
             self.render_signup(topic_id)
