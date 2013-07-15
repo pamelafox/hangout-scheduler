@@ -133,6 +133,7 @@ class TopicCreatePage(BasePage):
         creator = users.get_current_user()
         title = self.request.get('title')
         descrip = self.request.get('descrip')
+
         start = util.convert_htmldatetime(self.request.get('start'))
         end = util.convert_htmldatetime(self.request.get('end'))
         slot_minutes = int(self.request.get('slot_minutes'))

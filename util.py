@@ -1,5 +1,5 @@
 import os
-import datetime
+from dateutil.parser import parse
 
 
 def get_host():
@@ -11,4 +11,4 @@ def get_host():
 
 
 def convert_htmldatetime(htmldatetime):
-    return datetime.datetime.strptime(htmldatetime, '%Y-%m-%dT%H:%M:%S.%fZ')
+    return parse(htmldatetime)

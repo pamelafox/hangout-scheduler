@@ -2,7 +2,7 @@
 {% block title %}Hangout Scheduler | Create Topic{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="/css/jquery-ui.min.css">
-<link rel="stylesheet" href="/css/jquery.datetime.css">
+<link rel="stylesheet" href="/css/jquery.timepicker.css">
 
 {% endblock %}
 
@@ -16,12 +16,12 @@
 
         <div class="pure-control-group">
         	<label for="topic-create-title">Title</label>
-            <input name="title" type="text" id="topic-create-title" value="Test title">
+            <input name="title" type="text" id="topic-create-title" value="">
         </div>
 
         <div class="pure-control-group">
             <label for="topic-create-descrip">Description (Markdown)</label>
-            <textarea name="descrip" id="topic-create-descrip" rows="6" style="width:422px;">Test descrip</textarea>
+            <textarea name="descrip" id="topic-create-descrip" rows="6" style="width:422px;"></textarea>
         </div>
 
         <div class="pure-control-group">
@@ -52,6 +52,18 @@
 {% block bodyend %}
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
-<script src="/js/modernizr.min.js"></script>
-<script src="/js/jquery.datetime.js"></script>
+<!--<script src="/js/modernizr.min.js"></script>-->
+<script src="/js/jquery.timepicker.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $('form [type=datetime]').datetimepicker({
+    ampm: true,
+    showTimezone: true,
+    dateFormat: 'yy/mm/dd',
+    timeFormat: 'hh:mm TT z'
+  });
+
+});
+</script>
 {% endblock %}

@@ -16,7 +16,6 @@
         <tr id="topic-signup-slot-{{slot.id}}">
 
             <td>
-                {{ slot.id }}
                 <time datetime="{{ slot.start_iso }}" data-display>{{ slot.start_iso }}</time>
             </td>
             <td>
@@ -64,7 +63,7 @@ $(document).ready(function() {
 
   $('time[data-display]').each(function() {
     var utcDate = moment.utc($(this).attr('datetime'));
-    var localDate = utcDate.local().format("dddd, MMMM Do YYYY, h:mm:ssa");
+    var localDate = utcDate.local().format("dddd, MMMM Do YYYY, h:mm A");
     
     $(this).text(localDate);
 
