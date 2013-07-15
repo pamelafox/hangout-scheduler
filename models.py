@@ -44,16 +44,24 @@ class TopicSlot(db.Model):
         return self.key().id()
 
     @property
-    def start_iso(self):
-        return self.start.isoformat()
-
-    @property
     def end(self):
         return self.start + datetime.timedelta(minutes=self.topic.slot_minutes)
 
     @property
+    def start_iso(self):
+        return self.start.isoformat()
+
+    @property
     def end_iso(self):
         return self.end.isoformat()
+
+    @property
+    def start_gcal(self):
+        return self.start.strftime("%Y%m%dT%H%M%SZ")
+
+    @property
+    def end_gcal(self):
+        return self.end.strftime("%Y%m%dT%H%M%SZ")
 
     @property
     def happening_now(self):

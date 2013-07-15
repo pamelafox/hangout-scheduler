@@ -19,6 +19,8 @@
                 var eventTitle = $timeEl.attr('data-event-title') || document.title;
                 var eventLocation = $timeEl.attr('data-event-location') || window.location.href;
                 var eventDescription = $timeEl.attr('data-event-description') || '';
+                // http://www.google.com/calendar/event?action=TEMPLATE&text=What&dates=20130715T220000Z/20130715T223000Z&details=Description&location=Where
+                // 
                 var calendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' +
                                   '&text=' + encodeURIComponent(eventTitle) +
                                   '&dates=' + eventDateTime +

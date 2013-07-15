@@ -5,7 +5,16 @@
 
 {% block middle %}
 
-<h1>{{ topic.title }}, <time datetime="{{ slot.start_iso }}" data-display>{{ slot.start_iso }}</time></h1>
+<h2>{{ topic.title }}</h2>
+
+<h3>
+    <time datetime="{{ slot.start_iso }}" data-display>{{ slot.start_iso }}</time>
+    <data data-event
+        data-event-dates="{{ slot.start_gcal }}/{{slot.end_gcal }}"
+        data-event-title="{{ topic.title }}"
+        data-event-description="{{ topic.descrip }}"
+        data-event-location="{{ slot.full_link }}"></data>
+</h3>
 
 <p data-topic-descrip>{{ topic.descrip }}</p>
 
@@ -27,7 +36,8 @@
 <div data-hangouts data-hangouts-prefix="hangout-topic{{topic.id}}-slot{{slot.id}}" data-hangouts-counter={{slot.counter}}>
 </div>
 {% else %}
-<p>Check back when your hangout starts to join the discussion!</p>
+<p>Check back when your hangout starts to join the discussion!
+</p>
 {% endif %}
 
 {% endblock %}
@@ -36,6 +46,7 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/marked.js"></script>
 <script src="/js/moment.min.js"></script>
+<script src="/js/jquery.eventlinker.js"></script>
 <script src="/js/util.js"></script>
 <script>
     window["___gcfg"] = {
@@ -54,6 +65,8 @@
         $('[data-topic-descrip]').each(function() { util.renderToMarkdown($(this)); });
 
         $('time[data-display]').each(function() { util.showLocalTime($(this)); });
+
+        $('[data-event]').eventLinker();
 
         function addHangoutWidget(topic, id) {
             window.gapi.hangout.render(id, {

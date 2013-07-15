@@ -39,11 +39,11 @@
             <a href="{{ rsvp.slot.full_link }}">{{ rsvp.local_time }}</a>
            </td>
            <td>
-            <time datetime="{{ rsvp.slot.start_iso }}" data-event
-                data-event-dates="{{ rsvp.slot.start_iso }}/{{rsvp.slot.end_iso }}"
+            <data data-event
+                data-event-dates="{{ rsvp.slot.start_gcal }}/{{rsvp.slot.end_gcal }}"
                 data-event-title="{{ rsvp.topic.title }}"
                 data-event-description="{{ rsvp.topic.descrip }}"
-                data-event-location="{{ rsvp.slot.full_link }}">
+                data-event-location="{{ rsvp.slot.full_link }}"></data>
             </td>
         <tr>
         {% endfor %}
@@ -63,7 +63,7 @@
 <script>
 $(document).ready(function() {
 
-  $('time[data-event]').eventLinker();
+  $('[data-event]').eventLinker();
 
 });
 </script>
